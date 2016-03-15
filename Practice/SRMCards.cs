@@ -8,16 +8,15 @@ namespace EpsilonLambda.Competitive.TopCoder.Practice
     {
         public int maxTurns(int[] cards)
         {
-            Array.Sort(cards);
-            LinkedList<int> cardInfos = new LinkedList<int>(cards);
+            var cardSet = new HashSet<int>(cards);
 
             int turns = 0;
-            while (cardInfos.Any())
+            while (cardSet.Any())
             {
-                LinkedListNode<int> optimalNode = FindMinNode(cardInfos, node => GetCardGroup(node).Count());
+                int optimalCard = FindMin(cardSet, card => GetCardGroup(card, cardSet).Count());
 
-                foreach (var cardNode in GetCardGroup(optimalNode))
-                    cardInfos.Remove(cardNode);
+                foreach (var card in GetCardGroup(optimalCard, cardSet))
+                    cardSet.Remove(card);
 
                 turns++;
             }
@@ -25,35 +24,32 @@ namespace EpsilonLambda.Competitive.TopCoder.Practice
             return turns;
         }
 
-        internal static IEnumerable<LinkedListNode<int>> GetCardGroup(LinkedListNode<int> cardNode)
+        internal static IEnumerable<int> GetCardGroup(int card, ISet<int> cardSet)
         {
-            var group = new List<LinkedListNode<int>>();
+            var group = new List<int>();
 
-            group.Add(cardNode);
+            group.Add(card);
 
-            if (cardNode.Next != null && cardNode.Next.Value == cardNode.Value + 1)
-                group.Add(cardNode.Next);
+            if (cardSet.Contains(card + 1))
+                group.Add(card + 1);
 
-            if (cardNode.Previous != null && cardNode.Previous.Value == cardNode.Value - 1)
-                group.Add(cardNode.Previous);
+            if (cardSet.Contains(card - 1))
+                group.Add(card - 1);
 
             return group;
         }
 
-        internal static LinkedListNode<T> FindMinNode<T>(LinkedList<T> list, Func<LinkedListNode<T>, int> GetMetric) where T : IComparable<T>
+        internal static T FindMin<T, U>(IEnumerable<T> collection, Func<T, U> GetMetric) where U : IComparable<U>
         {
-            LinkedListNode<T> minNode = null;
-            LinkedListNode<T> node = list.First;
+            T min = collection.First();
 
-            while (node != null)
+            foreach(T item in collection)
             {
-                if (minNode == null || (GetMetric(node) - GetMetric(minNode) <= 0))
-                    minNode = node;
-
-                node = node.Next;
+                if (GetMetric(item).CompareTo(GetMetric(min)) <= 0)
+                    min = item;
             }
 
-            return minNode;
+            return min;
         }
     }
 }

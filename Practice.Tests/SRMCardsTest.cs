@@ -38,9 +38,7 @@ namespace UnitTestProject1
 
         private void AssertGroupOfResult(int[] expectedGroup, int card, int[] cards)
         {
-            var cardsLinkedList = new LinkedList<int>(cards);
-            var cardNode = cardsLinkedList.Find(card);
-            var result = new HashSet<int>(SRMCards.GetCardGroup(cardNode).Select(n => n.Value));
+            var result = new HashSet<int>(SRMCards.GetCardGroup(card, new HashSet<int>(cards)));
             foreach (int expected in expectedGroup)
             {
                 Assert.IsTrue(result.Contains(expected));
