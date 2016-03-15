@@ -6,7 +6,7 @@ namespace EpsilonLambda.Competitive.TopCoder.Practice
 {
     public class SRMCards
     {
-        public int maxCards(int[] cards)
+        public int maxTurns(int[] cards)
         {
             Array.Sort(cards);
             LinkedList<int> cardInfos = new LinkedList<int>(cards);
@@ -15,9 +15,8 @@ namespace EpsilonLambda.Competitive.TopCoder.Practice
             while (cardInfos.Any())
             {
                 LinkedListNode<int> optimalNode = FindMinNode(cardInfos, node => GetCardGroup(node).Count());
-                var cardGroup = GetCardGroup(optimalNode).ToArray();
 
-                foreach (var cardNode in cardGroup)
+                foreach (var cardNode in GetCardGroup(optimalNode))
                     cardInfos.Remove(cardNode);
 
                 turns++;
@@ -28,26 +27,27 @@ namespace EpsilonLambda.Competitive.TopCoder.Practice
 
         internal static IEnumerable<LinkedListNode<int>> GetCardGroup(LinkedListNode<int> cardNode)
         {
-            var Next = cardNode.Next;
-            var Prev = cardNode.Previous;
+            var group = new List<LinkedListNode<int>>();
 
-            yield return cardNode;
+            group.Add(cardNode);
 
-            if (Next != null && Next.Value == cardNode.Value + 1)
-                yield return Next;
+            if (cardNode.Next != null && cardNode.Next.Value == cardNode.Value + 1)
+                group.Add(cardNode.Next);
 
-            if (Prev != null && Prev.Value == cardNode.Value - 1)
-                yield return Prev;
+            if (cardNode.Previous != null && cardNode.Previous.Value == cardNode.Value - 1)
+                group.Add(cardNode.Previous);
+
+            return group;
         }
 
-        internal static LinkedListNode<T> FindMinNode<T>(LinkedList<T> list, Func<LinkedListNode<T>, int> Metric) where T : IComparable<T>
+        internal static LinkedListNode<T> FindMinNode<T>(LinkedList<T> list, Func<LinkedListNode<T>, int> GetMetric) where T : IComparable<T>
         {
             LinkedListNode<T> minNode = null;
             LinkedListNode<T> node = list.First;
 
             while (node != null)
             {
-                if (minNode == null || (Metric(node) - Metric(minNode) <= 0))
+                if (minNode == null || (GetMetric(node) - GetMetric(minNode) <= 0))
                     minNode = node;
 
                 node = node.Next;

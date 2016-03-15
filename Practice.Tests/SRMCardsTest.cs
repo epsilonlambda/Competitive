@@ -19,7 +19,7 @@ namespace UnitTestProject1
 
         private void AssertSolution(int expected, params int[] cards)
         {
-            Assert.AreEqual(expected, srmCards.maxCards(cards));
+            Assert.AreEqual(expected, srmCards.maxTurns(cards));
         }
 
         private static int[] R(params int[] integers)
