@@ -38,7 +38,9 @@ namespace UnitTestProject1
 
         private void AssertGroupOfResult(int[] expectedGroup, int card, int[] cards)
         {
-            var result = new HashSet<int>(srmCards.GroupOf(card, new HashSet<int>(cards)));
+            var cardsLinkedList = new LinkedList<int>(cards);
+            var cardNode = cardsLinkedList.Find(card);
+            var result = new HashSet<int>(SRMCards.GetCardGroup(cardNode).Select(n => n.Value));
             foreach (int expected in expectedGroup)
             {
                 Assert.IsTrue(result.Contains(expected));
@@ -52,6 +54,42 @@ namespace UnitTestProject1
             AssertSolution(0);
             AssertSolution(1, 1);
             AssertSolution(1, 2);
+        }
+
+        [TestMethod]
+        public void Ex0()
+        {
+            AssertSolution(1, 498, 499);
+        }
+
+        [TestMethod]
+        public void Ex1()
+        {
+            AssertSolution(4, 491, 492, 495, 497, 498, 499);
+        }
+
+        [TestMethod]
+        public void Ex2()
+        {
+            AssertSolution(4, 100, 200, 300, 400);
+        }
+
+        [TestMethod]
+        public void Ex3()
+        {
+            AssertSolution(6, 11, 12, 102, 13, 100, 101, 99, 9, 8, 1);
+        }
+
+        [TestMethod]
+        public void Ex4()
+        {
+            AssertSolution(4, 118, 321, 322, 119, 120, 320);
+        }
+
+        [TestMethod]
+        public void Ex5()
+        {
+            AssertSolution(7, 10, 11, 12, 13, 14, 1, 2, 3, 4, 5, 6, 7, 8, 9);
         }
 
         private readonly int[] Test1 = R(301, 302, 305, 307, 308, 309);

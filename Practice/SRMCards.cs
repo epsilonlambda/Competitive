@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EpsilonLambda.Competitive.TopCoder.Practice
 {
@@ -10,26 +8,52 @@ namespace EpsilonLambda.Competitive.TopCoder.Practice
     {
         public int maxCards(int[] cards)
         {
-            return maxCards(new HashSet<int>(cards));
+            Array.Sort(cards);
+            LinkedList<int> cardInfos = new LinkedList<int>(cards);
+
+            int turns = 0;
+            while (cardInfos.Any())
+            {
+                LinkedListNode<int> optimalNode = FindMinNode(cardInfos, node => GetCardGroup(node).Count());
+                var cardGroup = GetCardGroup(optimalNode).ToArray();
+
+                foreach (var cardNode in cardGroup)
+                    cardInfos.Remove(cardNode);
+
+                turns++;
+            }
+
+            return turns;
         }
 
-        internal int maxCards(ISet<int> cards)
+        internal static IEnumerable<LinkedListNode<int>> GetCardGroup(LinkedListNode<int> cardNode)
         {
-            if (!cards.Any())
-                return 0;
-            else
-                return -1;
+            var Next = cardNode.Next;
+            var Prev = cardNode.Previous;
+
+            yield return cardNode;
+
+            if (Next != null && Next.Value == cardNode.Value + 1)
+                yield return Next;
+
+            if (Prev != null && Prev.Value == cardNode.Value - 1)
+                yield return Prev;
         }
 
-        internal IEnumerable<int> GroupOf(int card, ISet<int> cards)
+        internal static LinkedListNode<T> FindMinNode<T>(LinkedList<T> list, Func<LinkedListNode<T>, int> Metric) where T : IComparable<T>
         {
-            yield return card;
+            LinkedListNode<T> minNode = null;
+            LinkedListNode<T> node = list.First;
 
-            if (cards.Contains(card - 1))
-                yield return card - 1;
+            while (node != null)
+            {
+                if (minNode == null || (Metric(node) - Metric(minNode) <= 0))
+                    minNode = node;
 
-            if (cards.Contains(card + 1))
-                yield return card + 1;
+                node = node.Next;
+            }
+
+            return minNode;
         }
     }
 }
