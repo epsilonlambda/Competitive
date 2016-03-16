@@ -8,16 +8,16 @@ namespace EpsilonLambda.Competitive.TopCoder.Practice
     {
         public int maxTurns(int[] cards)
         {
-            var cardSet = new HashSet<int>(cards);
+            return maxTurns(new HashSet<int>(cards));
+        }
 
+        private static int maxTurns(ISet<int> cards)
+        {
             int turns = 0;
-            while (cardSet.Any())
+            while (cards.Any())
             {
-                int optimalCard = FindMin(cardSet, card => GetCardGroup(card, cardSet).Count());
-
-                foreach (var card in GetCardGroup(optimalCard, cardSet))
-                    cardSet.Remove(card);
-
+                int optimalCard = FindMin(cards, c => GetCardGroup(c, cards).Count());
+                cards.ExceptWith(GetCardGroup(optimalCard, cards));
                 turns++;
             }
 
