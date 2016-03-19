@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DoubleWeights.cs" />
+    <Compile Include="MultiplicationTable2Easy.cs" />
     <Compile Include="SRMCards.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ThePalindrome.cs" />
