@@ -52,6 +52,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="DivFreed2Tests.cs" />
     <Compile Include="SRMCardsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ThePalindromeTest.cs" />
