@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="DivFreed2.cs" />
     <Compile Include="DoubleWeights.cs" />
+    <Compile Include="MoveStonesEasy.cs" />
     <Compile Include="MultiplicationTable2Easy.cs" />
     <Compile Include="SRMCards.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
