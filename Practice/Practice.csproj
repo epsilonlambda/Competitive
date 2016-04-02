@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CombiningSlimes.cs" />
     <Compile Include="DivFreed2.cs" />
     <Compile Include="DoubleWeights.cs" />
     <Compile Include="MoveStonesEasy.cs" />
