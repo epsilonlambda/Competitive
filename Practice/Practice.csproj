@@ -41,11 +41,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CombiningSlimes.cs" />
+    <Compile Include="ConnectingCars.cs" />
     <Compile Include="DivFreed2.cs" />
     <Compile Include="DoubleWeights.cs" />
     <Compile Include="ExactTreeEasy.cs" />
     <Compile Include="MoveStonesEasy.cs" />
     <Compile Include="MultiplicationTable2Easy.cs" />
+    <Compile Include="SegmentsAndPoints.cs" />
     <Compile Include="SRMCards.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SubstitutionCipher.cs" />
